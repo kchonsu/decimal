@@ -71,19 +71,19 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   return code;
 }
 
-int main() {
-  s21_decimal x = {{4, 0, 0, 0b00000000000000000000000000000000}};
-  s21_decimal y = {{5, 0, 0, 0b00000000000000000000000000000000}};
-  s21_decimal z = {0};
-  change_scale(&x, 28);
-  change_scale(&y, 28);
-  int code = s21_mul(x, y, &z);
-  printf("%u %u %u %u\n", z.bits[0], z.bits[1], z.bits[2], z.bits[3]);
-  printf("code = %d   scale = %d\n", code, check_scale(z));
-  see_bit(x, 1);
-  printf("\n");
-  see_bit(y, 1);
-  printf("\n");
-  see_bit(z, 1);
-  printf("\n");
-}
+//int main() {
+//  s21_decimal x = {{4, 0, 0, 0b00000000000000000000000000000000}};
+//  s21_decimal y = {{5, 0, 0, 0b00000000000000000000000000000000}};
+//  s21_decimal z = {0};
+//  change_scale(&x, 28);
+//  change_scale(&y, 28);
+//  int code = s21_mul(x, y, &z);
+//  printf("%u %u %u %u\n", z.bits[0], z.bits[1], z.bits[2], z.bits[3]);
+//  printf("code = %d   scale = %d\n", code, check_scale(z));
+//  see_bit(x, 1);
+//  printf("\n");
+//  see_bit(y, 1);
+//  printf("\n");
+//  see_bit(z, 1);
+//  printf("\n");
+//}

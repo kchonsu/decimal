@@ -62,21 +62,6 @@ int long_scale(long_decimal *a, long_decimal *b) {
   return 0;
 }
 
-int bank_sum(s21_decimal a, s21_decimal b, s21_decimal *result) {
-  long_decimal summary, raw_a = castDecToLong(a), raw_b = castDecToLong(b);
-  long_scale(&raw_a, &raw_b);
-  long_sum(raw_a, raw_b, &summary, 0, LONGBITS);
-  summary.bits[6] = raw_a.bits[6];
-  if (long_check_scale(summary) > 0 && overflow(summary)) {
-    banker_round(&summary);
-  }
-  result->bits[0] = summary.bits[0];
-  result->bits[1] = summary.bits[1];
-  result->bits[2] = summary.bits[2];
-  result->bits[3] = summary.bits[6];
-  return overflow(summary);
-}
-
 int sub_bits(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   if (is_less_abs(value_1, value_2)) {
     s21_decimal buff = value_2;
@@ -213,14 +198,6 @@ int long_truncate(long_decimal value, long_decimal *result) {
     long_change_scale(result, -1);
   }
   return error;
-}
-
-int long_zero_left(long_decimal x) {
-  int count = 0;
-  for (int i = LONGBITS - 1; i <= 0; i--)
-    if (!long_check_bit(x, i))
-      count++;
-  return count;
 }
 
 int long_reverse(long_decimal *x, int n) {

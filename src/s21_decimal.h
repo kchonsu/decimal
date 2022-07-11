@@ -85,7 +85,6 @@ int sub_bits(s21_decimal value_1, s21_decimal value_2, s21_decimal *result);
 
 int long_set_bit(long_decimal *x, int i, int k);
 int long_check_bit(long_decimal x, int i);
-int long_zero_left(long_decimal x);
 int long_reverse(long_decimal *x, int n);
 int overflow(long_decimal src);
 int is_greater_ten(long_decimal value);
@@ -99,7 +98,6 @@ int long_see_bit(long_decimal x, int mode);
 long_decimal castDecToLong(s21_decimal src);
 int castLongToDec(long_decimal src, s21_decimal *dst);
 int long_truncate(long_decimal value, long_decimal *result);
-int bank_sum(s21_decimal a, s21_decimal b, s21_decimal *result);
 
 int get_float_exp(float *src);
 int get_float_bit(float src);
