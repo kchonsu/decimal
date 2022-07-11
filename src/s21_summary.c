@@ -249,20 +249,22 @@ int is_greater_ten(long_decimal value) {
 }
 
 int castLongToDec(long_decimal src, s21_decimal *dst) {
-  int code = 0;
-  while (overflow(src) || long_check_scale(src) > 28) {
+  int code = 0, scale = long_check_scale(src);
+  while (overflow(src) || scale > 28) {
     if (long_check_scale(src) > 0) {
       long_change_scale(&src, -1);
       long_div_ten(&src);
+      scale--;
     } else {
       code = 1;
       break;
     }
-    if (is_null(src) && long_check_scale(src) > 28) {
+    if (is_null(src) && scale > 28) {
       code = 2;
       break;
     }
   }
+  if (overflow(src)) code = 1;
   if (!code) {
     dst->bits[0] = src.bits[0];
     dst->bits[1] = src.bits[1];

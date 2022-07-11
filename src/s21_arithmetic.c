@@ -7,14 +7,18 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
   long_decimal raw_a = castDecToLong(value_1);
   long_decimal raw_b = castDecToLong(value_2);
   long_sum(raw_a, raw_b, &raw_result, LONGBITS, LONGSCALE);
-  for (int i = 0; i < BITSVAL && !error; i++) {
+  for (int i = 0; i < BITSVAL; i++) {
     if (long_check_bit(raw_b, i))
       error = long_sum(raw_a, raw_result, &raw_result, 0, LONGBITS);
     if (!error && !long_check_bit(raw_result, LONGBITS - 1))
       long_shift_left(&raw_a, 1);
-    else
+    else {
       error = 1;
+      break;
+    }
   }
+//  long_see_bit(raw_result, 1);
+//  printf("\n");
   if (!error)
     error = castLongToDec(raw_result, result);
   if ((!result->bits[0] && !result->bits[1] && !result->bits[2]) || error) {
@@ -65,4 +69,21 @@ int s21_sub(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     result->bits[0] = result->bits[1] = result->bits[2] = result->bits[3] = 0;
   }
   return code;
+}
+
+int main() {
+  s21_decimal x = {{4, 0, 0, 0b00000000000000000000000000000000}};
+  s21_decimal y = {{5, 0, 0, 0b00000000000000000000000000000000}};
+  s21_decimal z = {0};
+  change_scale(&x, 28);
+  change_scale(&y, 28);
+  int code = s21_mul(x, y, &z);
+  printf("%u %u %u %u\n", z.bits[0], z.bits[1], z.bits[2], z.bits[3]);
+  printf("code = %d   scale = %d\n", code, check_scale(z));
+  see_bit(x, 1);
+  printf("\n");
+  see_bit(y, 1);
+  printf("\n");
+  see_bit(z, 1);
+  printf("\n");
 }
