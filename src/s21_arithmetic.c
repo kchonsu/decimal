@@ -15,7 +15,6 @@ int s21_mul(s21_decimal value_1, s21_decimal value_2, s21_decimal *result) {
     else
       error = 1;
   }
-//  long_see_bit(raw_result, 1);
   if (!error)
     error = castLongToDec(raw_result, result);
   if ((!result->bits[0] && !result->bits[1] && !result->bits[2]) || error) {
